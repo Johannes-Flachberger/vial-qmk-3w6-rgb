@@ -26,24 +26,29 @@ enum os_modes {
 
 enum os_modes os_mode = OS_PC;
 
-// Super alt tab
+// Super alt tab and super alt ctl
 bool is_alt_tab_active = false;
+bool is_ctl_tab_active = false;
 
 
 enum custom_keycodes {
     SWITCH_OS = SAFE_RANGE,
     ALT_TAB,
+    CTL_TAB,
     MA_WRDR,
     MA_WRDL,
     MA_WRD_DEL,
     MA_WRD_BSPC,
+    MA_LINE_DEL,
+    MA_LINE_BSPC,
     MA_COPY,
     MA_CUT,
     MA_PASTE,
     MA_UNDO,
     MA_QUIT,
     MA_FIND,
-    MA_OS_SEARCH
+    MA_OS_SEARCH,
+    MA_LOCK
 };
 
 enum layers
@@ -60,49 +65,45 @@ enum layers
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     
     [_ALPHA_COLEMAK] = LAYOUT_split_3x5_3(
-        DE_Q,         DE_W,         DE_F,         DE_P,         DE_B,                       DE_J, DE_L,         DE_U,         DE_Y,         DE_QUOT,
-        LCTL_T(DE_A), LALT_T(DE_R), LGUI_T(DE_S), LSFT_T(DE_T), DE_G,                       DE_M, RSFT_T(DE_N), RGUI_T(DE_E), RALT_T(DE_I), RCTL_T(DE_O),
-        DE_Z,         DE_X,         DE_C,         DE_D,         DE_V,                       DE_K, DE_H,         DE_COMM,      DE_DOT,       DE_SCLN,
-                     LT(_FUN, KC_BSPC) , LT(_NAV,KC_ENT), LT(_NUM, KC_TAB),           MA_OS_SEARCH, LT(_SYM, KC_SPC), LT(_UML, KC_DEL)         
+        DE_Q, DE_W, DE_F,  DE_P,         DE_B,                        DE_J, DE_L,         DE_U,    DE_Y,   DE_PLUS,
+        DE_A, DE_R, DE_S,  LSFT_T(DE_T), DE_G,                        DE_M, RSFT_T(DE_N), DE_E,    DE_I,   DE_O,
+        DE_Z, DE_X, DE_C,  DE_D,         DE_V,                        DE_K, DE_H,         DE_COMM, DE_DOT, DE_MINS,
+        LGUI_T(KC_BSPC) , LT(_NAV,KC_ENT), LCTL_T(KC_TAB),          LT(_NUM, KC_BSPC), LT(_SYM, KC_SPC), LALT_T(KC_DEL)                
     ),
 
     [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
-        DE_Q,         DE_W,         DE_E,         DE_R,         DE_T,                                           DE_Y, DE_U,         DE_I,         DE_O,         DE_P,  
-        LCTL_T(DE_A), LALT_T(DE_S), LGUI_T(DE_D), LSFT_T(DE_F), DE_G,                                           DE_H, RSFT_T(DE_J), RGUI_T(DE_K), RALT_T(DE_L), RCTL_T(DE_SCLN),
-        DE_Z,         DE_X,         DE_C,         DE_V,         DE_B,                                           DE_N, DE_M,         DE_COMM,      DE_DOT,       DE_SLSH,
-                                                LT(_FUN, KC_BSPC) , LT(_NAV,KC_ENT), LT(_NUM, KC_TAB),           MA_OS_SEARCH, LT(_SYM, KC_SPC), LT(_UML, KC_DEL)         
+        DE_Q, DE_W, DE_E, DE_R,         DE_T,                                    DE_Y, DE_U,         DE_I,    DE_O,   DE_P,  
+        DE_A, DE_S, DE_D, LSFT_T(DE_F), DE_G,                                    DE_H, RSFT_T(DE_J), DE_K,    DE_L,   DE_SCLN,
+        DE_Z, DE_X, DE_C, DE_V,         DE_B,                                    DE_N, DE_M,         DE_COMM, DE_DOT, DE_SLSH,
+            LCTL_T(KC_BSPC) , LT(_NAV,KC_ENT), LGUI_T(KC_TAB),          LT(_NUM, KC_BSPC), LT(_SYM, KC_SPC), LALT_T(KC_DEL)         
     ),
     
     [_SYM] = LAYOUT_split_3x5_3(
-        DE_GRV  , DE_UNDS , DE_LBRC , DE_RBRC , DE_PIPE ,                                 DE_DLR , DE_QUES, DE_TILD , DE_HASH  , DE_QUOT ,
-        DE_PLUS , DE_MINS , DE_LPRN , DE_RPRN , DE_SLSH ,                                 DE_DEG , DE_EXLM, DE_PERC , DE_AT    , DE_DQUO , 
-        DE_ASTR , DE_EQL  , DE_LCBR , DE_RCBR , DE_BSLS ,                                 DE_ACUT, DE_AMPR, DE_LABK , DE_RABK  , DE_CIRC ,
-                                      _______, _______, _______,             _______, _______, _______         
-    ),
+        RALT(DE_E), DE_PIPE , DE_EQL ,  DE_LBRC , DE_RBRC ,                 DE_TILD,DE_QUES, DE_UDIA , DE_PERC  , DE_ACUT ,
+        DE_ADIA ,   DE_SLSH , DE_SS ,   DE_LPRN , DE_RPRN ,                 DE_AT , DE_EXLM, DE_DQUO , DE_QUOT  , DE_ODIA , 
+        DE_DLR ,    DE_BSLS , DE_HASH , DE_LCBR , DE_RCBR ,                 DE_DEG, DE_AMPR, DE_LABK , DE_RABK  , DE_CIRC ,
+                                      _______, KC_LSFT, _______,     _______, _______, _______     
+    ),   
+
     [_NAV] = LAYOUT_split_3x5_3(
-        KC_ESC, MA_QUIT, ALT_TAB, KC_PSCR, XXXXXXX,                                                    KC_PGUP,     MA_WRDL, KC_UP  , MA_WRDR,  KC_PGDN,
-        LCTL_T(XXXXXXX), LALT_T(XXXXXXX), LGUI_T(XXXXXXX), LSFT_T(XXXXXXX), XXXXXXX,                   KC_HOME,     KC_LEFT, KC_DOWN, KC_RGHT,  KC_END,
-        MA_FIND, MA_CUT, MA_COPY, MA_PASTE, MA_UNDO ,                                                  XXXXXXX, MA_WRD_BSPC, XXXXXXX, MA_WRD_DEL, XXXXXXX  ,
-                                        _______, _______, _______,                             KC_BSPC, _______, KC_DEL         
+        MA_LOCK, CTL_TAB, MA_QUIT,     KC_PSCR,         XXXXXXX,                KC_PGUP, MA_WRD_BSPC, MA_WRDL,   MA_WRDR,  MA_WRD_DEL,
+        KC_ESC,  ALT_TAB,  MA_OS_SEARCH, LSFT_T(XXXXXXX), XXXXXXX,                KC_PGDN, KC_LEFT,     KC_DOWN,   KC_UP,   KC_RGHT,
+        MA_UNDO, MA_CUT,   MA_COPY,     MA_FIND,         MA_PASTE  ,             XXXXXXX, MA_LINE_BSPC, KC_HOME,   KC_END, MA_LINE_DEL,
+                                          _______, _______, _______,        LGUI_T(KC_BSPC), _______, OSM(KC_RALT)    
     ),
+
     [_NUM] = LAYOUT_split_3x5_3(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                                      DE_PLUS, DE_7   , DE_8   , DE_9   , DE_SLSH ,
-        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,                                    DE_0,    DE_4   , DE_5   , DE_6   , DE_DOT  , 
-        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX,  XXXXXXX,                                    DE_MINS, DE_1   , DE_2   , DE_3   , DE_ASTR ,
+        XXXXXXX, KC_VOLD, KC_MUTE,  KC_VOLU ,  XXXXXXX,                                    DE_PLUS, DE_7   , DE_8   , DE_9   , DE_SLSH ,
+        MO(_FUN), KC_MPRV, KC_MPLY,  KC_MNXT,  XXXXXXX,                                    DE_0,    DE_4   , DE_5   , DE_6   , DE_DOT  , 
+        XXXXXXX, RM_VALD, XXXXXXX,  RM_VALU,   XXXXXXX,                                    DE_MINS, DE_1   , DE_2   , DE_3   , DE_ASTR ,
                                         _______, _______, _______,     _______, _______, _______
     ),
     [_FUN] = LAYOUT_split_3x5_3(
-        XXXXXXX, KC_VOLD,   KC_MUTE,           KC_VOLU,            XXXXXXX,                            XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F10,
-        XXXXXXX, KC_MPRV,   KC_MPLY,           KC_MNXT,            XXXXXXX,                            XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,
-        XXXXXXX, SWITCH_OS, DF(_ALPHA_QWERTY), DF(_ALPHA_COLEMAK), XXXXXXX,                            XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F12,
-                                                             _______, _______, _______,     _______, _______, _______
-    ),
-    [_UML] = LAYOUT_split_3x5_3(
-        XXXXXXX,         XXXXXXX,         XXXXXXX,       XXXXXXX,         XXXXXXX,            XXXXXXX, DE_UDIA,         DE_UDIA,         DE_ODIA,         XXXXXXX,
-        LCTL_T(DE_ADIA), LALT_T(DE_SS),   LGUI_T(DE_SS), LSFT_T(XXXXXXX), XXXXXXX,            XXXXXXX, RSFT_T(XXXXXXX), RGUI_T(XXXXXXX), RALT_T(XXXXXXX), RCTL_T(DE_ODIA),
-        XXXXXXX,         XXXXXXX,         XXXXXXX,       XXXXXXX,         XXXXXXX,            XXXXXXX, XXXXXXX,         XXXXXXX,         XXXXXXX,         XXXXXXX,
-                                                             _______, _______, _______,     _______, _______, _______
-    ),
+        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                         DF(_ALPHA_QWERTY) , KC_F7, KC_F8, KC_F9, KC_F10,
+        _______, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                         DF(_ALPHA_COLEMAK), KC_F4, KC_F5, KC_F6, KC_F11,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                          SWITCH_OS, KC_F1, KC_F2, KC_F3, KC_F12,
+                                     _______, _______, _______,     _______, _______, _______
+    )
 };
 
 
@@ -123,16 +124,6 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
             rgb_matrix_set_color(i, rgb.r, rgb.g, rgb.b);
         }  
     }
-    /*
-    if (os_mode == OS_PC) {
-        RGB rgb = hsv_to_rgb((HSV){0,0,rgb_matrix_get_val()}); //white
-        rgb_matrix_set_color(16, rgb.r, rgb.g, rgb.b);
-    }
-    if (os_mode == OS_MAC) {
-        RGB rgb = hsv_to_rgb((HSV){15, 255, rgb_matrix_get_val()}); // dark orange
-        rgb_matrix_set_color(16, rgb.r, rgb.g, rgb.b);
-    }
-    */
     return false;
 }   
 
@@ -185,6 +176,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       break;
 
+    case CTL_TAB:
+      if (record->event.pressed) {
+        if (!is_ctl_tab_active) {
+          is_ctl_tab_active = true;
+          register_code(KC_LCTL);
+        }
+        tap_code(KC_TAB);
+      }
+      break;
+
     case MA_WRDR:
         if (record->event.pressed){
             if(os_mode == OS_PC) tap_code16(LCTL(KC_RIGHT));
@@ -211,7 +212,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             if(os_mode == OS_PC) tap_code16(LCTL(KC_BSPC));
             else tap_code16(LALT(KC_BSPC));
         }
-        return true; 
+        return true;
+
+    case MA_LINE_DEL:
+        if (record->event.pressed) {
+                tap_code16(LSFT(KC_END));
+                tap_code(KC_BSPC);
+        }
+        return true;
+
+    case MA_LINE_BSPC:
+        if (record->event.pressed) {
+            tap_code16(LSFT(KC_HOME));
+            tap_code(KC_DEL);
+        }
+        return true;
 
     case MA_COPY:
         if (record->event.pressed) {
@@ -240,6 +255,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             else tap_code16(LGUI(DE_Z));
         }
         return true;
+    
     case MA_QUIT:
         if (record->event.pressed) {
             if(os_mode == OS_PC) tap_code16(LALT(KC_F4));
@@ -257,17 +273,19 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     
     case MA_OS_SEARCH:
         if (record->event.pressed) {
-            if(os_mode == OS_PC) {
-                tap_code16(KC_LGUI);
-            }
-            else {
-                register_code(KC_LGUI);
-                tap_code(KC_SPC);
-                unregister_code(KC_LGUI);
-            }
+            if(os_mode == OS_PC) tap_code16(KC_LGUI);
+            else tap_code16(LGUI(KC_SPC));
+        }
+        return true;
+    
+    case MA_LOCK:
+        if (record->event.pressed) {
+            if(os_mode == OS_PC) tap_code16(LGUI(DE_L));
+            else tap_code16(LGUI(KC_ESC));
         }
         return true;
     }
+    
 
     // ##### map german MAC keycodes to german PC ############
     if (record->event.pressed && os_mode == OS_PC) {
@@ -315,6 +333,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         if (is_alt_tab_active == true) {
             unregister_code(KC_LALT);
             is_alt_tab_active = false;
+        }
+        if (is_ctl_tab_active == true) {
+            unregister_code(KC_LCTL);
+            is_ctl_tab_active = false;
         }
     }  
     return state;
