@@ -146,9 +146,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NUM] = LAYOUT_split_3x5_3(
-        XXXXXXX, KC_VOLD, KC_MUTE,  KC_VOLU ,  XXXXXXX,                        DE_MINS , DE_7   , DE_8   , DE_9   , DE_SLSH ,
-        XXXXXXX, KC_MPRV, KC_MPLY,  KC_MNXT,  XXXXXXX,                         DE_PLUS , DE_4   , DE_5   , DE_6   , DE_ASTR , 
-        XXXXXXX, RM_VALD, XXXXXXX,  RM_VALU,   XXXXXXX,                        KC_TAB  , DE_1   , DE_2   , DE_3   , DE_DOT  ,
+        XXXXXXX, KC_VOLD, KC_MUTE,  KC_VOLU ,  XXXXXXX,                        DE_PLUS  , DE_7   , DE_8   , DE_9   , DE_ASTR ,
+        XXXXXXX, KC_MPRV, KC_MPLY,  KC_MNXT,  XXXXXXX,                         DE_MINS  , DE_4   , DE_5   , DE_6   , DE_SLSH ,
+        XXXXXXX, KC_BRID, XXXXXXX,  KC_BRIU,   XXXXXXX,                        DE_COMM  , DE_1   , DE_2   , DE_3   , DE_DOT  ,
                                          _______, _______, _______,     _______, _______, DE_0
     ),
     [_FUN] = LAYOUT_split_3x5_3(
