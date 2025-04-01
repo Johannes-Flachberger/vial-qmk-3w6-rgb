@@ -121,23 +121,23 @@ bool is_ctl_tab_active = false;
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     
     [_ALPHA] = LAYOUT_split_3x5_3(
-        DE_Q, DE_W, DE_F,  DE_P, DE_B,                                    DE_J, DE_L, DE_U,    DE_Y,   DE_PLUS,
+        DE_Q, DE_W, DE_F,  DE_P, DE_B,                                    DE_J, DE_L, DE_U,    DE_Y,    DE_SS,
         DE_A, DE_R, DE_S,  DE_T, DE_G,                                    DE_M, DE_N, DE_E,    DE_I,   DE_O,
-        DE_Z, DE_X, DE_C,  DE_D, DE_V,                                    DE_K, DE_H, DE_COMM, DE_DOT, DE_MINS,
+        DE_Z, DE_X, DE_C,  DE_D, DE_V,                                    DE_K, DE_H, DE_ADIA, DE_UDIA, DE_ODIA,
      KC_ENT , LT(_SYML, KC_SPC), LT(_NAV,  KC_BSPC),          LT(_NUM, KC_BSPC), LT(_SYMR, KC_ENT) , LT(_FUN, KC_TAB)
     ),
     
     [_SYML] = LAYOUT_split_3x5_3(
-        RALT(DE_E), DE_PIPE , DE_EQL ,  DE_LBRC , DE_RBRC ,                 LSFT(DE_J), LSFT(DE_L) , LSFT(DE_U) , LSFT(DE_Y) , LSFT(DE_PLUS) ,
-        DE_ADIA ,   DE_SLSH , DE_SS ,   DE_LPRN , DE_RPRN ,                 LSFT(DE_M), LSFT(DE_N) , LSFT(DE_E) , LSFT(DE_I) , LSFT(DE_O) , 
-        DE_DLR ,    DE_BSLS , DE_HASH , DE_LCBR , DE_RCBR ,                 LSFT(DE_K), LSFT(DE_H) , LSFT(DE_COMM) , LSFT(DE_DOT) , LSFT(DE_MINS) ,
+        RALT(DE_E), DE_PIPE , DE_EQL  , DE_LBRC , DE_RBRC ,                 LSFT(DE_J), LSFT(DE_L) , LSFT(DE_U)    , LSFT(DE_Y)   , LSFT(DE_SS) ,
+        DE_HASH   , DE_SLSH , DE_MINS , DE_LPRN , DE_RPRN ,                 LSFT(DE_M), LSFT(DE_N) , LSFT(DE_E)    , LSFT(DE_I)   , LSFT(DE_O)    , 
+        DE_DLR    , DE_BSLS , DE_PLUS , DE_LCBR , DE_RCBR ,                 LSFT(DE_K), LSFT(DE_H) , LSFT(DE_ADIA) , LSFT(DE_UDIA) , LSFT(DE_ODIA) ,
                                       _______, _______, _______,     _______, _______, _______     
     ),   
 
     [_SYMR] = LAYOUT_split_3x5_3(
-        LSFT(DE_Q), LSFT(DE_W) , LSFT(DE_F) , LSFT(DE_P) , LSFT(DE_B) ,                 DE_TILD,DE_QUES, DE_UDIA , DE_PERC  , DE_ACUT ,
-        LSFT(DE_A), LSFT(DE_R) , LSFT(DE_S) , LSFT(DE_T) , LSFT(DE_G) ,                 DE_AT , DE_EXLM, DE_DQUO , DE_QUOT  , DE_ODIA , 
-        LSFT(DE_Z), LSFT(DE_X) , LSFT(DE_C) , LSFT(DE_D) , LSFT(DE_V) ,                 DE_DEG, DE_AMPR, DE_LABK , DE_RABK  , DE_CIRC ,
+        LSFT(DE_Q), LSFT(DE_W) , LSFT(DE_F) , LSFT(DE_P) , LSFT(DE_B) ,                 DE_TILD, DE_QUES, DE_QUOT , DE_PERC  , DE_ACUT ,
+        LSFT(DE_A), LSFT(DE_R) , LSFT(DE_S) , LSFT(DE_T) , LSFT(DE_G) ,                 DE_AT ,  DE_EXLM, DE_DQUO , DE_COMM  ,  DE_DOT , 
+        LSFT(DE_Z), LSFT(DE_X) , LSFT(DE_C) , LSFT(DE_D) , LSFT(DE_V) ,                 DE_DEG,  DE_AMPR, DE_LABK , DE_RABK  , DE_CIRC ,
                                       _______, _______, _______,     _______, _______, _______     
     ),  
 
