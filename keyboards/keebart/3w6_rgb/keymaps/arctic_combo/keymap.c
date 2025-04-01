@@ -17,8 +17,9 @@
 #include QMK_KEYBOARD_H
 #include "keymap_german_mac_iso.h"
 #include "keycodes_german_pc.h"
+#include "custom.h"
 
-
+// clang-format off
 enum os_modes {
     OS_MAC = 0,
     OS_PC
@@ -159,10 +160,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
+// clang-format on
 
 // ######### RGB Stuff ##########
 void keyboard_post_init_user(void) {
-    rgb_matrix_sethsv_noeeprom(15, 255, 20); //dark orange
+    rgb_matrix_sethsv_noeeprom(15, 255, 20); // dark orange
 }
 
 // ######### OS Detection ##########
@@ -182,188 +184,141 @@ bool process_detected_host_os_kb(os_variant_t detected_os) {
             os_mode = OS_PC;
             break;
     }
-    
+
     return true;
 }
 
 // ############## MACROS ################
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    switch (keycode) {
-    case SWITCH_OS:
-        if (record->event.pressed) {
-            if (os_mode == OS_PC) {
-                os_mode = OS_MAC;
-                SEND_STRING("MAC");
-            } 
-            else {
-                os_mode = OS_PC;
-                SEND_STRING("PC");
-            }
-        } 
-        return true;
-
-    case ALT_TAB:
-      if (record->event.pressed) {
-        if (!is_alt_tab_active) {
-          is_alt_tab_active = true;
-          register_code(KC_LALT);
-        }
-        tap_code(KC_TAB);
-      }
-      break;
-
-    case CTL_TAB:
-      if (record->event.pressed) {
-        if (!is_ctl_tab_active) {
-          is_ctl_tab_active = true;
-          register_code(KC_LCTL);
-        }
-        tap_code(KC_TAB);
-      }
-      break;
-
-    case MA_WRDR:
-        if (record->event.pressed){
-            if(os_mode == OS_PC) tap_code16(LCTL(KC_RIGHT));
-            else tap_code16(LALT(KC_RIGHT));
-        }
-        return true;
-
-    case MA_WRDL:
-        if (record->event.pressed) {
-            if(os_mode == OS_PC) tap_code16(LCTL(KC_LEFT));
-            else tap_code16(LALT(KC_LEFT));
-        }
-        return true;
-
-    case MA_WRD_DEL:
-        if (record->event.pressed) {
-            if(os_mode == OS_PC) tap_code16(LCTL(KC_DEL));
-            else tap_code16(LALT(KC_DEL));
-        }
-        return true;
-
-    case MA_WRD_BSPC:
-        if (record->event.pressed) {
-            if(os_mode == OS_PC) tap_code16(LCTL(KC_BSPC));
-            else tap_code16(LALT(KC_BSPC));
-        }
-        return true;
-
-    case MA_LINE_DEL:
-        if (record->event.pressed) {
-                tap_code16(LSFT(KC_END));
-                tap_code(KC_BSPC);
-        }
-        return true;
-
-    case MA_LINE_BSPC:
-        if (record->event.pressed) {
-            tap_code16(LSFT(KC_HOME));
-            tap_code(KC_DEL);
-        }
-        return true;
-
-    case MA_COPY:
-        if (record->event.pressed) {
-            if(os_mode == OS_PC) tap_code16(LCTL(DE_C));
-            else tap_code16(LGUI(DE_C));
-        }
-        return true; 
-    
-    case MA_CUT:
-        if (record->event.pressed) {
-            if(os_mode == OS_PC) tap_code16(LCTL(DE_X));
-            else tap_code16(LGUI(DE_X));
-        }
-        return true; 
-
-    case MA_PASTE:
-        if (record->event.pressed) {
-            if(os_mode == OS_PC) tap_code16(LCTL(DE_V));
-            else tap_code16(LGUI(DE_V));
-        }
-        return true; 
-
-    case MA_UNDO:
-        if (record->event.pressed) {
-            if(os_mode == OS_PC) tap_code16(LCTL(DE_Z));
-            else tap_code16(LGUI(DE_Z));
-        }
-        return true;
-    
-    case MA_QUIT:
-        if (record->event.pressed) {
-            if(os_mode == OS_PC) tap_code16(LALT(KC_F4));
-            else if (is_alt_tab_active == true) tap_code(DE_Q);
-            else tap_code16(LGUI(DE_Q));
-        }
-        return true; 
-
-    case MA_FIND:
-        if (record->event.pressed) {
-            if(os_mode == OS_PC) tap_code16(LCTL(DE_F));
-            else tap_code16(LGUI(DE_F));
-        }
-        return true;
-    
-    case MA_OS_SEARCH:
-        if (record->event.pressed) {
-            if(os_mode == OS_PC) tap_code16(KC_LGUI);
-            else tap_code16(LGUI(KC_SPC));
-        }
-        return true;
-    
-    case MA_LOCK:
-        if (record->event.pressed) {
-            if(os_mode == OS_PC) tap_code16(LGUI(DE_L));
-            else tap_code16(LGUI(KC_ESC));
-        }
-        return true;
-    case MA_SAVE:
-        if (record->event.pressed) {
-            if(os_mode == OS_PC) tap_code16(LCTL(DE_S));
-            else tap_code16(LGUI(DE_S));
-        }
-        return true;
-    }
-    
-
-    // ##### map german MAC keycodes to german PC ############
-    if (record->event.pressed && os_mode == OS_PC) {
+    if (record->event.pressed) {
         switch (keycode) {
+            case SWITCH_OS:
+                if (os_mode == OS_PC) {
+                    os_mode = OS_MAC;
+                    SEND_STRING("MAC");
+                } else {
+                    os_mode = OS_PC;
+                    SEND_STRING("PC");
+                }
+                return true;
 
-            case DE_LCBR:
-                tap_code16(PC_DE_LCBR);
-                return false;
-            case DE_LBRC:
-                tap_code16(PC_DE_LBRC);
-                return false;
-            case DE_RBRC:
-                tap_code16(PC_DE_RBRC);
-                return false;
-            case DE_RCBR:
-                tap_code16(PC_DE_RCBR);
-                return false;
-            case DE_BSLS:
-                tap_code16(PC_DE_BSLS);
-                return false;
-            case DE_AT:
-                tap_code16(PC_DE_AT);
-                return false;
-            case DE_EURO:
-                tap_code16(PC_DE_EURO);
-                return false;
-            case DE_TILD:
-                tap_code16(PC_DE_TILD);
-                return false;
-            case DE_PIPE:
-                tap_code16(PC_DE_PIPE);
-                return false;
-            case DE_MICR:
-                tap_code16(PC_DE_MICR);
-                return false;
+            case ALT_TAB:
+                if (!is_alt_tab_active) {
+                    is_alt_tab_active = true;
+                    register_code(KC_LALT);
+                }
+                tap_code(KC_TAB);
+                break;
+
+            case CTL_TAB:
+                if (!is_ctl_tab_active) {
+                    is_ctl_tab_active = true;
+                    register_code(KC_LCTL);
+                }
+                tap_code(KC_TAB);
+                break;
+
+            case MA_WRDR:
+                os_mode == OS_PC ? tap_code16(LCTL(KC_RIGHT)) : tap_code16(LALT(KC_RIGHT));
+                return true;
+
+            case MA_WRDL:
+                os_mode == OS_PC ? tap_code16(LCTL(KC_LEFT)) : tap_code16(LALT(KC_LEFT));
+                return true;
+
+            case MA_WRD_DEL:
+                os_mode == OS_PC ? tap_code16(LCTL(KC_DEL)) : tap_code16(LALT(KC_DEL));
+                return true;
+
+            case MA_WRD_BSPC:
+                os_mode == OS_PC ? tap_code16(LCTL(KC_BSPC)) : tap_code16(LALT(KC_BSPC));
+                return true;
+
+            case MA_LINE_DEL:
+                os_mode == OS_PC ? tap_code16(LSFT(KC_END)) : tap_code(KC_BSPC);
+                return true;
+
+            case MA_LINE_BSPC:
+                os_mode == OS_PC ? tap_code16(LSFT(KC_HOME)) : tap_code(KC_DEL);
+                return true;
+
+            case MA_COPY:
+                os_mode == OS_PC ? tap_code16(LCTL(DE_C)) : tap_code16(LGUI(DE_C));
+                return true;
+
+            case MA_CUT:
+                os_mode == OS_PC ? tap_code16(LCTL(DE_X)) : tap_code16(LGUI(DE_X));
+                return true;
+
+            case MA_PASTE:
+                os_mode == OS_PC ? tap_code16(LCTL(DE_V)) : tap_code16(LGUI(DE_V));
+                return true;
+
+            case MA_UNDO:
+                os_mode == OS_PC ? tap_code16(LCTL(DE_Z)) : tap_code16(LGUI(DE_Z));
+                return true;
+
+            case MA_QUIT:
+                if (os_mode == OS_PC)
+                    tap_code16(LALT(KC_F4));
+                else if (is_alt_tab_active == true)
+                    tap_code(DE_Q);
+                else
+                    tap_code16(LGUI(DE_Q));
+
+                return true;
+
+            case MA_FIND:
+                os_mode == OS_PC ? tap_code16(LCTL(DE_F)) : tap_code16(LGUI(DE_F));
+                return true;
+
+            case MA_OS_SEARCH:
+                os_mode == OS_PC ? tap_code16(KC_LGUI) : tap_code16(LGUI(KC_SPC));
+                return true;
+
+            case MA_LOCK:
+                os_mode == OS_PC ? tap_code16(LGUI(DE_L)) : tap_code16(LGUI(KC_ESC));
+                return true;
+            case MA_SAVE:
+                os_mode == OS_PC ? tap_code16(LCTL(DE_S)) : tap_code16(LGUI(DE_S));
+                return true;
+        }
+
+        // ##### map german MAC keycodes to german PC ############
+        if (os_mode == OS_PC) {
+            switch (keycode) {
+                case DE_LCBR:
+                    tap_code16(PC_DE_LCBR);
+                    return false;
+                case DE_LBRC:
+                    tap_code16(PC_DE_LBRC);
+                    return false;
+                case DE_RBRC:
+                    tap_code16(PC_DE_RBRC);
+                    return false;
+                case DE_RCBR:
+                    tap_code16(PC_DE_RCBR);
+                    return false;
+                case DE_BSLS:
+                    tap_code16(PC_DE_BSLS);
+                    return false;
+                case DE_AT:
+                    tap_code16(PC_DE_AT);
+                    return false;
+                case DE_EURO:
+                    tap_code16(PC_DE_EURO);
+                    return false;
+                case DE_TILD:
+                    tap_code16(PC_DE_TILD);
+                    return false;
+                case DE_PIPE:
+                    tap_code16(PC_DE_PIPE);
+                    return false;
+                case DE_MICR:
+                    tap_code16(PC_DE_MICR);
+                    return false;
+            }
         }
     }
     return true;
@@ -381,8 +336,6 @@ layer_state_t layer_state_set_user(layer_state_t state) {
             unregister_code(KC_LCTL);
             is_ctl_tab_active = false;
         }
-    }  
+    }
     return state;
 }
-
-
