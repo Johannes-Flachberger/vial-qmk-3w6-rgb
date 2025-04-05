@@ -128,37 +128,37 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     
     [_SYML] = LAYOUT_split_3x5_3(
-        RALT(DE_E), DE_PIPE , DE_EQL  , DE_LBRC , DE_RBRC ,                 LSFT(DE_J), LSFT(DE_L) , LSFT(DE_U)    , LSFT(DE_Y)   , LSFT(DE_SS) ,
-        DE_HASH   , DE_SLSH , DE_MINS , DE_LPRN , DE_RPRN ,                 LSFT(DE_M), LSFT(DE_N) , LSFT(DE_E)    , LSFT(DE_I)   , LSFT(DE_O)    , 
-        DE_DLR    , DE_BSLS , DE_PLUS , DE_LCBR , DE_RCBR ,                 LSFT(DE_K), LSFT(DE_H) , LSFT(DE_ADIA) , LSFT(DE_UDIA) , LSFT(DE_ODIA) ,
-                                      _______, _______, _______,     _______, _______, _______     
+        LSFT(DE_PLUS), DE_PIPE , DE_EQL        , DE_LBRC , DE_RBRC ,                 LSFT(DE_J), LSFT(DE_L) , LSFT(DE_U)    , LSFT(DE_Y)   , LSFT(DE_SS)    ,
+        DE_HASH      , DE_SLSH , DE_MINS       , DE_LPRN , DE_RPRN ,                 LSFT(DE_M), LSFT(DE_N) , LSFT(DE_E)    , LSFT(DE_I)   , LSFT(DE_O)     , 
+        DE_PLUS      , DE_BSLS , LSFT(DE_MINS) , DE_LCBR , DE_RCBR ,                 LSFT(DE_K), LSFT(DE_H) , LSFT(DE_ADIA) , LSFT(DE_UDIA) , LSFT(DE_ODIA) ,
+                                                    _______, _______, _______,     _______, _______, _______     
     ),   
 
     [_SYMR] = LAYOUT_split_3x5_3(
-        LSFT(DE_Q), LSFT(DE_W) , LSFT(DE_F) , LSFT(DE_P) , LSFT(DE_B) ,                 DE_TILD, DE_QUES, DE_QUOT , DE_PERC  , DE_ACUT ,
-        LSFT(DE_A), LSFT(DE_R) , LSFT(DE_S) , LSFT(DE_T) , LSFT(DE_G) ,                 DE_AT ,  DE_EXLM, DE_DQUO , DE_COMM  ,  DE_DOT , 
-        LSFT(DE_Z), LSFT(DE_X) , LSFT(DE_C) , LSFT(DE_D) , LSFT(DE_V) ,                 DE_DEG,  DE_AMPR, DE_LABK , DE_RABK  , DE_CIRC ,
-                                      _______, _______, _______,     _______, _______, _______     
+        LSFT(DE_Q), LSFT(DE_W) , LSFT(DE_F) , LSFT(DE_P) , LSFT(DE_B) ,                 DE_PERC , DE_QUES, DE_QUOT , DE_TILD       , DE_ACUT     ,
+        LSFT(DE_A), LSFT(DE_R) , LSFT(DE_S) , LSFT(DE_T) , LSFT(DE_G) ,                 DE_AT   , DE_EXLM, DE_DQUO , DE_COMM       , DE_DOT      , 
+        LSFT(DE_Z), LSFT(DE_X) , LSFT(DE_C) , LSFT(DE_D) , LSFT(DE_V) ,                 DE_LABK , DE_AMPR, DE_RABK , LSFT(DE_COMM) , LSFT(DE_DOT),
+                                                    _______, _______, _______,     _______, _______, _______     
     ),  
 
     [_NAV] = LAYOUT_split_3x5_3(
         MA_LOCK, CTL_TAB,  MA_FIND, MA_QUIT     , XXXXXXX,                KC_PGUP, MA_WRD_BSPC,  MA_WRDL,   MA_WRDR, MA_WRD_DEL,
         KC_ESC,  ALT_TAB,  MA_SAVE, MA_OS_SEARCH, KC_TAB ,                KC_PGDN, KC_LEFT,      KC_DOWN,   KC_UP,   KC_RGHT,
         MA_UNDO, MA_CUT,   MA_COPY, KC_PSCR     , MA_PASTE,               XXXXXXX, MA_LINE_BSPC, KC_HOME,   KC_END,  MA_LINE_DEL,
-                                     _______, KC_LSFT, _______,      _______, KC_LSFT, KC_DEL    
+                                        _______, _______, _______,      _______, KC_LSFT, KC_DEL    
     ),
 
     [_NUM] = LAYOUT_split_3x5_3(
-        XXXXXXX, KC_VOLD, KC_MUTE,  KC_VOLU ,  XXXXXXX,                        DE_PLUS  , DE_7   , DE_8   , DE_9   , DE_ASTR ,
-        XXXXXXX, KC_MPRV, KC_MPLY,  KC_MNXT,  XXXXXXX,                         DE_MINS  , DE_4   , DE_5   , DE_6   , DE_SLSH ,
-        XXXXXXX, KC_BRID, XXXXXXX,  KC_BRIU,   XXXXXXX,                        DE_COMM  , DE_1   , DE_2   , DE_3   , DE_DOT  ,
-                                         _______, KC_LSFT, _______,     _______, KC_LSFT, DE_0
+        XXXXXXX, KC_VOLD, KC_MUTE,    KC_VOLU ,  XXXXXXX,                        DE_PLUS  , DE_7   , DE_8   , DE_9   , DE_ASTR ,
+        XXXXXXX, KC_MPRV, KC_MPLY,    KC_MNXT ,  XXXXXXX,                        DE_MINS  , DE_4   , DE_5   , DE_6   , DE_SLSH ,
+        DE_DEG,  DE_CIRC, RALT(DE_E), DE_DLR  ,  XXXXXXX,                        DE_COMM  , DE_1   , DE_2   , DE_3   , DE_DOT  ,
+                                        _______, KC_LSFT, _______,     _______, _______, DE_0
     ),
     [_FUN] = LAYOUT_split_3x5_3(
         XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                         XXXXXXX , KC_F7, KC_F8, KC_F9, KC_F10,
         XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                         XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,
         XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                         SWITCH_OS, KC_F1, KC_F2, KC_F3, KC_F12,
-                                     _______, KC_LSFT, _______,     _______, KC_LSFT, _______
+                                        _______, _______, _______,     _______, _______, _______
     )
 };
 
