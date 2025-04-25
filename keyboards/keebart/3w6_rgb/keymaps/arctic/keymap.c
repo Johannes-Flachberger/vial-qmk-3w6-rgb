@@ -47,9 +47,9 @@ enum custom_keycodes {
 
 enum layers
 {
-    _ALPHA  = 0,
-    _SYML,
-    _SYMR,
+    _ALPHA_COLEMAK  = 0,
+    _ALPHA_QWERTY,
+    _SYM,
     _NAV,
     _NUM,
     _FUN
@@ -62,16 +62,15 @@ enum combos {
     COMBO_LGUI,
     COMBO_RGUI,
     COMBO_LALT,
-    COMBO_RALT,
+    COMBO_RALT_2,
     COMBO_LCTL_LGUI,
     COMBO_LCTL_LALT,
     COMBO_LCTL_LGUI_LALT,
     COMBO_LGUI_LALT,
     COMBO_RCTL_RGUI,
-    COMBO_RCTL_RALT,
-    COMBO_RCTL_RGUI_RALT,
-    COMBO_RGUI_RALT,
-    COMBO_SFT
+    COMBO_RCTL_LALT,
+    COMBO_RCTL_RGUI_LALT,
+    COMBO_RGUI_LALT
 };
 
 // define keys that make up combos
@@ -89,7 +88,6 @@ const uint16_t PROGMEM combo_nei[] = {DE_N, DE_E, DE_I, COMBO_END};
 const uint16_t PROGMEM combo_neio[] = {DE_N, DE_E, DE_I, DE_O, COMBO_END};
 const uint16_t PROGMEM combo_nio[] = {DE_N, DE_I, DE_O, COMBO_END};
 const uint16_t PROGMEM combo_neo[] = {DE_N, DE_E, DE_O, COMBO_END};
-const uint16_t PROGMEM combo_sft[] = {LT(_SYML, KC_SPC), LT(_SYMR, KC_ENT), COMBO_END};
 
 // map combo names to their keys and the key they trigger
 combo_t key_combos[] = {
@@ -98,16 +96,15 @@ combo_t key_combos[] = {
     [COMBO_LGUI] = COMBO(combo_tr, KC_LGUI),
     [COMBO_RGUI] = COMBO(combo_ni, KC_RGUI),
     [COMBO_LALT] = COMBO(combo_ta, KC_LALT),
-    [COMBO_RALT] = COMBO(combo_no, KC_RALT),
+    [COMBO_RALT_2] = COMBO(combo_no, KC_LALT),
     [COMBO_LCTL_LGUI] = COMBO(combo_tsr, LCTL(KC_LGUI)),
     [COMBO_LCTL_LGUI_LALT] = COMBO(combo_tsra, LCTL(LGUI(KC_LALT))),
     [COMBO_LGUI_LALT] = COMBO(combo_tra, LGUI(KC_LALT)),
     [COMBO_LCTL_LALT] = COMBO(combo_tsa, LCTL(KC_LALT)),
     [COMBO_RCTL_RGUI] = COMBO(combo_nei, RCTL(KC_RGUI)),
-    [COMBO_RCTL_RGUI_RALT] = COMBO(combo_neio, RCTL(RGUI(KC_RALT))),
-    [COMBO_RGUI_RALT] = COMBO(combo_nio, RGUI(KC_RALT)),
-    [COMBO_RCTL_RALT] = COMBO(combo_neo, RCTL(KC_RALT)),
-    [COMBO_RCTL_RALT] = COMBO(combo_sft, KC_LSFT),
+    [COMBO_RCTL_RGUI_LALT] = COMBO(combo_neio, RCTL(RGUI(KC_LALT))),
+    [COMBO_RGUI_LALT] = COMBO(combo_nio, RGUI(KC_LALT)),
+    [COMBO_RCTL_LALT] = COMBO(combo_neo, RCTL(KC_LALT)),
 
 };
 
@@ -120,45 +117,46 @@ bool is_ctl_tab_active = false;
 // LED Nummerierung: Links oben = 0, dann schlangenlinien nach rechts und hinunter, wechsel auf andere Hälfte im Thumb cluster
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     
-    [_ALPHA] = LAYOUT_split_3x5_3(
-        DE_Q, DE_W, DE_F,  DE_P, DE_B,                                    DE_J, DE_L, DE_U,    DE_Y,    DE_SS,
+    [_ALPHA_COLEMAK] = LAYOUT_split_3x5_3(
+        DE_Q, DE_W, DE_F,  DE_P, DE_B,                                    DE_J, DE_L, DE_U,    DE_Y,   DE_PLUS,
         DE_A, DE_R, DE_S,  DE_T, DE_G,                                    DE_M, DE_N, DE_E,    DE_I,   DE_O,
-        DE_Z, DE_X, DE_C,  DE_D, DE_V,                                    DE_K, DE_H, DE_ADIA, DE_UDIA, DE_ODIA,
-     KC_ENT , LT(_SYML, KC_SPC), LT(_NAV,  KC_BSPC),          LT(_NUM, KC_BSPC), LT(_SYMR, KC_ENT) , LT(_FUN, KC_TAB)
+        DE_Z, DE_X, DE_C,  DE_D, DE_V,                                    DE_K, DE_H, DE_COMM, DE_DOT, DE_MINS,
+        LSFT_T(KC_ENT) , LT(_SYM, KC_SPC), LT(_NAV,  KC_BSPC),          LT(_NUM, KC_TAB), LSFT_T(KC_SPC) , LT(_FUN, KC_ENT)
+    ),
+
+    [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
+        DE_Q, DE_W, DE_E, DE_R, DE_T,                                    DE_Y, DE_U, DE_I,    DE_O,   DE_P,  
+        DE_A, DE_S, DE_D, DE_F, DE_G,                                    DE_H, DE_J, DE_K,    DE_L,   DE_SCLN,
+        DE_Z, DE_X, DE_C, DE_V, DE_B,                                    DE_N, DE_M, DE_COMM, DE_DOT, DE_SLSH,
+        LSFT_T(KC_ENT) , LT(_SYM, KC_SPC), LT(_NAV,  KC_BSPC),          LT(_NUM, KC_TAB), LSFT_T(KC_SPC) , LT(_FUN, KC_ENT)
     ),
     
-    [_SYML] = LAYOUT_split_3x5_3(
-        LSFT(DE_PLUS), DE_PIPE , DE_EQL        , DE_LBRC , DE_RBRC ,                 LSFT(DE_J), LSFT(DE_L) , LSFT(DE_U)    , LSFT(DE_Y)   , LSFT(DE_SS)    ,
-        DE_HASH      , DE_SLSH , DE_MINS       , DE_LPRN , DE_RPRN ,                 LSFT(DE_M), LSFT(DE_N) , LSFT(DE_E)    , LSFT(DE_I)   , LSFT(DE_O)     , 
-        DE_PLUS      , DE_BSLS , LSFT(DE_MINS) , DE_LCBR , DE_RCBR ,                 LSFT(DE_K), LSFT(DE_H) , LSFT(DE_ADIA) , LSFT(DE_UDIA) , LSFT(DE_ODIA) ,
-                                                    _______, _______, _______,     _______, _______, _______     
+    [_SYM] = LAYOUT_split_3x5_3(
+        RALT(DE_E), DE_PIPE , DE_EQL  , DE_LBRC , DE_RBRC ,                 DE_CIRC , DE_QUES, DE_UDIA , DE_QUOT , DE_PERC ,
+        DE_ADIA ,   DE_SLSH , DE_SS   , DE_LPRN , DE_RPRN ,                 DE_HASH , DE_EXLM, DE_PLUS , DE_DQUO , DE_ODIA , 
+        DE_DLR ,    DE_BSLS , DE_TILD , DE_LCBR , DE_RCBR ,                 DE_AT   , DE_AMPR, DE_ASTR , DE_LABK , DE_RABK ,
+                                      _______, _______, _______,     _______, _______, _______     
     ),   
 
-    [_SYMR] = LAYOUT_split_3x5_3(
-        LSFT(DE_Q), LSFT(DE_W) , LSFT(DE_F) , LSFT(DE_P) , LSFT(DE_B) ,                 DE_PERC , DE_QUES, DE_QUOT , DE_TILD       , DE_ACUT     ,
-        LSFT(DE_A), LSFT(DE_R) , LSFT(DE_S) , LSFT(DE_T) , LSFT(DE_G) ,                 DE_AT   , DE_EXLM, DE_DQUO , DE_COMM       , DE_DOT      , 
-        LSFT(DE_Z), LSFT(DE_X) , LSFT(DE_C) , LSFT(DE_D) , LSFT(DE_V) ,                 DE_LABK , DE_AMPR, DE_RABK , LSFT(DE_COMM) , LSFT(DE_DOT),
-                                                    _______, _______, _______,     _______, _______, _______     
-    ),  
-
     [_NAV] = LAYOUT_split_3x5_3(
-        MA_LOCK, CTL_TAB,  MA_FIND, MA_QUIT     , XXXXXXX,                KC_PGUP, MA_WRD_BSPC,  MA_WRDL,   MA_WRDR, MA_WRD_DEL,
+        MA_LOCK, CTL_TAB,  MA_FIND, MA_QUIT     , OSM(KC_RALT),           KC_PGUP, MA_WRD_BSPC,  MA_WRDL,   MA_WRDR, MA_WRD_DEL,
         KC_ESC,  ALT_TAB,  MA_SAVE, MA_OS_SEARCH, KC_TAB ,                KC_PGDN, KC_LEFT,      KC_DOWN,   KC_UP,   KC_RGHT,
         MA_UNDO, MA_CUT,   MA_COPY, KC_PSCR     , MA_PASTE,               XXXXXXX, MA_LINE_BSPC, KC_HOME,   KC_END,  MA_LINE_DEL,
-                                        _______, _______, _______,      _______, KC_LSFT, KC_DEL    
+                                     _______, _______, _______,      _______, _______, KC_DEL    
     ),
 
     [_NUM] = LAYOUT_split_3x5_3(
-        XXXXXXX, KC_VOLD, KC_MUTE,    KC_VOLU ,  XXXXXXX,                        DE_PLUS  , DE_7   , DE_8   , DE_9   , DE_ASTR ,
-        XXXXXXX, KC_MPRV, KC_MPLY,    KC_MNXT ,  XXXXXXX,                        DE_MINS  , DE_4   , DE_5   , DE_6   , DE_SLSH ,
-        DE_DEG,  DE_CIRC, RALT(DE_E), DE_DLR  ,  XXXXXXX,                        DE_COMM  , DE_1   , DE_2   , DE_3   , DE_DOT  ,
-                                        _______, KC_LSFT, _______,     _______, _______, DE_0
+        XXXXXXX, KC_VOLD,   KC_MUTE,  KC_VOLU , XXXXXXX,                        DE_PLUS  , DE_7   , DE_8   , DE_9   , DE_ASTR ,
+        XXXXXXX, KC_MPRV,   KC_MPLY,  KC_MNXT , XXXXXXX,                        DE_MINS  , DE_4   , DE_5   , DE_6   , DE_SLSH ,
+        XXXXXXX, S(DE_ACUT), DE_ACUT, DE_DEG  , XXXXXXX,                        DE_COMM  , DE_1   , DE_2   , DE_3   , DE_DOT  ,
+                                         _______, _______, _______,     _______, _______, DE_0
     ),
+
     [_FUN] = LAYOUT_split_3x5_3(
-        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                         XXXXXXX , KC_F7, KC_F8, KC_F9, KC_F10,
-        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                         XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,
-        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                         SWITCH_OS, KC_F1, KC_F2, KC_F3, KC_F12,
-                                        _______, _______, _______,     _______, _______, _______
+        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                         DF(_ALPHA_QWERTY) , KC_F7, KC_F8, KC_F9, KC_F10,
+        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                         DF(_ALPHA_COLEMAK), KC_F4, KC_F5, KC_F6, KC_F11,
+        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                         SWITCH_OS,          KC_F1, KC_F2, KC_F3, KC_F12,
+                                     _______, _______, _______,     _______, _______, _______
     )
 };
 
@@ -329,7 +327,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 // Super alt tab
 
 layer_state_t layer_state_set_user(layer_state_t state) {
-    if (get_highest_layer(state) == _ALPHA) {
+    if ((get_highest_layer(state) == _ALPHA_COLEMAK) || (get_highest_layer(state) == _ALPHA_QWERTY)) {
         if (is_alt_tab_active == true) {
             unregister_code(KC_LALT);
             is_alt_tab_active = false;
