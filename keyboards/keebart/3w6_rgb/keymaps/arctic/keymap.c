@@ -118,10 +118,10 @@ bool is_ctl_tab_active = false;
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     
     [_ALPHA_COLEMAK] = LAYOUT_split_3x5_3(
-        DE_Q, DE_W, DE_F,  DE_P, DE_B,                                    DE_J, DE_L, DE_U,    DE_Y,   DE_PLUS,
-        DE_A, DE_R, DE_S,  DE_T, DE_G,                                    DE_M, DE_N, DE_E,    DE_I,   DE_O,
-        DE_Z, DE_X, DE_C,  DE_D, DE_V,                                    DE_K, DE_H, DE_COMM, DE_DOT, DE_MINS,
-        LSFT_T(KC_ENT) , LT(_SYM, KC_SPC), LT(_NAV,  KC_BSPC),          LT(_NUM, KC_TAB), LSFT_T(KC_SPC) , LT(_FUN, KC_ENT)
+        DE_Q, DE_W, DE_F,  DE_P, DE_B,                                          DE_J, DE_L, DE_U,    DE_Y,   DE_PLUS,
+        DE_A, DE_R, DE_S,  DE_T, DE_G,                                          DE_M, DE_N, DE_E,    DE_I,   DE_O,
+        DE_Z, DE_X, DE_C,  DE_D, DE_V,                                          DE_K, DE_H, DE_COMM, DE_DOT, DE_MINS,
+        LT(_NUM, KC_ENT) , LT( _SYM, KC_SPC), LT(_NAV,  KC_BSPC),     LT(_FUN, KC_TAB),  LSFT_T(KC_SPC) , KC_ENT
     ),
 
     [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
@@ -142,14 +142,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         MA_LOCK, CTL_TAB,  MA_FIND, MA_QUIT     , OSM(KC_RALT),           KC_PGUP, MA_WRD_BSPC,  MA_WRDL,   MA_WRDR, MA_WRD_DEL,
         KC_ESC,  ALT_TAB,  MA_SAVE, MA_OS_SEARCH, KC_TAB ,                KC_PGDN, KC_LEFT,      KC_DOWN,   KC_UP,   KC_RGHT,
         MA_UNDO, MA_CUT,   MA_COPY, KC_PSCR     , MA_PASTE,               XXXXXXX, MA_LINE_BSPC, KC_HOME,   KC_END,  MA_LINE_DEL,
-                                     _______, _______, _______,      _______, _______, KC_DEL    
+                                     _______, _______, _______,      KC_BSPC, LSFT_T(KC_ENT), LSFT_T(KC_DEL)
     ),
 
     [_NUM] = LAYOUT_split_3x5_3(
-        XXXXXXX, KC_VOLD,   KC_MUTE,  KC_VOLU , XXXXXXX,                        DE_PLUS  , DE_7   , DE_8   , DE_9   , DE_ASTR ,
-        XXXXXXX, KC_MPRV,   KC_MPLY,  KC_MNXT , XXXXXXX,                        DE_MINS  , DE_4   , DE_5   , DE_6   , DE_SLSH ,
-        XXXXXXX, S(DE_ACUT), DE_ACUT, DE_DEG  , XXXXXXX,                        DE_COMM  , DE_1   , DE_2   , DE_3   , DE_DOT  ,
-                                         _______, _______, _______,     _______, _______, DE_0
+        DE_MINS , DE_7   , DE_8   , DE_9   , XXXXXXX ,                         XXXXXXX, KC_VOLD,   KC_MUTE,  KC_VOLU , XXXXXXX,
+        DE_DOT  , DE_4   , DE_5   , DE_6   , DE_SLSH ,                         XXXXXXX, KC_MPRV,   KC_MPLY,  KC_MNXT , XXXXXXX,
+        DE_0    , DE_1   , DE_2   , DE_3   , DE_COMM ,                         XXXXXXX, S(DE_ACUT), DE_ACUT, DE_DEG  , XXXXXXX,
+                                   _______, _______, _______,     _______, _______, _______
     ),
 
     [_FUN] = LAYOUT_split_3x5_3(
