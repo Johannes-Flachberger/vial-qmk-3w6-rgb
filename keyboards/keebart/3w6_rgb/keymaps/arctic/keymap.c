@@ -121,14 +121,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         DE_Q, DE_W, DE_F,  DE_P, DE_B,                                          DE_J, DE_L, DE_U,    DE_Y,   DE_PLUS,
         DE_A, DE_R, DE_S,  DE_T, DE_G,                                          DE_M, DE_N, DE_E,    DE_I,   DE_O,
         DE_Z, DE_X, DE_C,  DE_D, DE_V,                                          DE_K, DE_H, DE_COMM, DE_DOT, DE_MINS,
-        LT(_NUM, KC_ENT) , LT( _SYM, KC_SPC), LT(_NAV,  KC_BSPC),     LT(_FUN, KC_TAB),  LSFT_T(KC_SPC) , KC_ENT
+        LT(_NUM, KC_ENT) , LT( _SYM, KC_SPC), LT(_NAV,  KC_BSPC),     LT(_NUM, KC_TAB),  LSFT_T(KC_SPC) , LT(_FUN, KC_ENT)
     ),
 
     [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
         DE_Q, DE_W, DE_E, DE_R, DE_T,                                    DE_Y, DE_U, DE_I,    DE_O,   DE_P,  
         DE_A, DE_S, DE_D, DE_F, DE_G,                                    DE_H, DE_J, DE_K,    DE_L,   DE_SCLN,
         DE_Z, DE_X, DE_C, DE_V, DE_B,                                    DE_N, DE_M, DE_COMM, DE_DOT, DE_SLSH,
-        LSFT_T(KC_ENT) , LT(_SYM, KC_SPC), LT(_NAV,  KC_BSPC),          LT(_NUM, KC_TAB), LSFT_T(KC_SPC) , LT(_FUN, KC_ENT)
+        LT(_NUM, KC_ENT) , LT( _SYM, KC_SPC), LT(_NAV,  KC_BSPC),     LT(_NUM, KC_TAB),  LSFT_T(KC_SPC) , LT(_FUN, KC_ENT)
     ),
     
     [_SYM] = LAYOUT_split_3x5_3(
@@ -140,9 +140,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [_NAV] = LAYOUT_split_3x5_3(
         MA_LOCK, CTL_TAB,  MA_FIND, MA_QUIT     , OSM(KC_RALT),           KC_PGUP, MA_WRD_BSPC,  MA_WRDL,   MA_WRDR, MA_WRD_DEL,
-        KC_ESC,  ALT_TAB,  MA_SAVE, MA_OS_SEARCH, KC_TAB ,                KC_PGDN, KC_LEFT,      KC_DOWN,   KC_UP,   KC_RGHT,
+        KC_ESC,  ALT_TAB,  MA_SAVE, MA_OS_SEARCH, LSFT_T(KC_TAB) ,                KC_PGDN, KC_LEFT,      KC_DOWN,   KC_UP,   KC_RGHT,
         MA_UNDO, MA_CUT,   MA_COPY, KC_PSCR     , MA_PASTE,               XXXXXXX, MA_LINE_BSPC, KC_HOME,   KC_END,  MA_LINE_DEL,
-                                     _______, _______, _______,      KC_BSPC, LSFT_T(KC_ENT), LSFT_T(KC_DEL)
+                                     _______, _______, _______,      KC_BSPC, LSFT_T(KC_ENT), KC_DEL
     ),
 
     [_NUM] = LAYOUT_split_3x5_3(
