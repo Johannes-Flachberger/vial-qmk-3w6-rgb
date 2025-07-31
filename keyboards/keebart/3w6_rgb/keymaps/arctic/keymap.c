@@ -146,16 +146,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NUM] = LAYOUT_split_3x5_3(
-        DE_MINS , DE_7   , DE_8   , DE_9   , XXXXXXX ,                         XXXXXXX, KC_VOLD,   KC_MUTE,  KC_VOLU , XXXXXXX,
-        DE_0    , DE_4   , DE_5   , DE_6   , DE_SLSH ,                         XXXXXXX, KC_MPRV,   KC_MPLY,  KC_MNXT , XXXXXXX,
-        DE_DOT  , DE_1   , DE_2   , DE_3   , DE_COMM ,                         XXXXXXX, S(DE_ACUT), DE_ACUT, DE_DEG  , XXXXXXX,
+        DE_MINS , DE_7   , DE_8   , DE_9   , XXXXXXX ,                         XXXXXXX, KC_VOLD, KC_MUTE   ,  KC_VOLU , XXXXXXX,
+        DE_0    , DE_4   , DE_5   , DE_6   , DE_SLSH ,                         XXXXXXX, KC_MPRV, KC_MPLY   ,  KC_MNXT , XXXXXXX,
+        DE_DOT  , DE_1   , DE_2   , DE_3   , DE_COMM ,                         XXXXXXX, DE_ACUT, S(DE_ACUT),  DE_DEG  , XXXXXXX,
                                    _______, _______, _______,     _______, _______, _______
     ),
 
     [_FUN] = LAYOUT_split_3x5_3(
-        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                         DF(_ALPHA_QWERTY) , KC_F7, KC_F8, KC_F9, KC_F10,
-        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                         DF(_ALPHA_COLEMAK), KC_F4, KC_F5, KC_F6, KC_F11,
-        XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,                         SWITCH_OS,          KC_F1, KC_F2, KC_F3, KC_F12,
+        XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F10,                         DF(_ALPHA_QWERTY) , XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,
+        XXXXXXX, KC_F4, KC_F5, KC_F6, KC_F11,                         DF(_ALPHA_COLEMAK), XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,
+        XXXXXXX, KC_F1, KC_F2, KC_F3, KC_F12,                         SWITCH_OS,          XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,
                                      _______, _______, _______,     _______, _______, _______
     )
 };
