@@ -30,10 +30,14 @@ enum custom_keycodes {
     CTL_TAB,
     MA_WRDR,
     MA_WRDL,
+    MA_LINEL,
+    MA_LINER,
     MA_WRD_DEL,
     MA_WRD_BSPC,
     MA_LINE_DEL,
     MA_LINE_BSPC,
+    MA_BLOCK_DOWM,
+    MA_BLOCK_UP,
     MA_COPY,
     MA_CUT,
     MA_PASTE,
@@ -133,19 +137,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     
     [_SYM] = LAYOUT_split_3x5_3(
-        RALT(DE_E), DE_PIPE , DE_EQL  , DE_LBRC , DE_RBRC ,                 DE_CIRC , DE_QUES, DE_UDIA , DE_QUOT , DE_PERC ,
+        RALT(DE_E), DE_PIPE , DE_DLR  , DE_LBRC , DE_RBRC ,                 DE_PERC , DE_QUES, DE_UDIA , DE_QUOT , DE_CIRC ,
         DE_ADIA ,   DE_SLSH , DE_SS   , DE_LPRN , DE_RPRN ,                 DE_HASH , DE_EXLM, DE_PLUS , DE_DQUO , DE_ODIA , 
-        DE_DLR ,    DE_BSLS , DE_TILD , DE_LCBR , DE_RCBR ,                 DE_AT   , DE_AMPR, DE_ASTR , DE_LABK , DE_RABK ,
+        DE_LABK ,   DE_BSLS , DE_RABK , DE_LCBR , DE_RCBR ,                 DE_AT   , DE_AMPR, DE_ASTR ,  DE_EQL,  DE_TILD,
                                       _______, _______, _______,     _______, _______, _______     
     ),   
 
     [_NAV] = LAYOUT_split_3x5_3(
-        MA_LOCK, MA_QUIT,      MA_FIND, CTL_TAB, KC_PSCR,           KC_PGUP, MA_WRD_BSPC,  MA_WRDL,   MA_WRDR, MA_WRD_DEL,
-        KC_ESC,  MA_OS_SEARCH, MA_SAVE, ALT_TAB, KC_TAB ,                KC_PGDN, KC_LEFT,      KC_DOWN,   KC_UP,   KC_RGHT,
-        MA_UNDO, MA_CUT,       MA_COPY, GUI_TAB, MA_PASTE,               XXXXXXX, MA_LINE_BSPC, KC_HOME,   KC_END,  MA_LINE_DEL,
+        MA_LOCK, MA_QUIT,      MA_FIND , CTL_TAB , KC_PSCR  ,       XXXXXXX      , MA_LINEL      , MA_WRD_BSPC , MA_WRD_DEL , MA_LINER,
+        KC_ESC , MA_OS_SEARCH, MA_SAVE , ALT_TAB , KC_TAB   ,       MA_LINE_BSPC , KC_LEFT       , MA_WRDL     , MA_WRDR    , KC_RGHT,
+        MA_UNDO, MA_CUT,       MA_COPY , GUI_TAB , MA_PASTE ,       MA_LINE_DEL  , MA_BLOCK_DOWM , KC_DOWN     , KC_UP      , MA_BLOCK_UP,
                                      _______, _______, _______,      KC_BSPC, LSFT_T(KC_ENT), KC_DEL
     ),
-
+  
     [_NUM] = LAYOUT_split_3x5_3(
         DE_MINS , DE_7   , DE_8   , DE_9   , XXXXXXX ,                         XXXXXXX, KC_VOLD, KC_MUTE   ,  KC_VOLU , XXXXXXX,
         DE_0    , DE_4   , DE_5   , DE_6   , DE_SLSH ,                         XXXXXXX, KC_MPRV, KC_MPLY   ,  KC_MNXT , XXXXXXX,
@@ -239,20 +243,34 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             case MA_WRD_DEL:
                 if (os_mode == OS_PC) {
                     // select next word, then delete
-                    tap_code16(LCTL(LSFT(KC_RGHT)));
-                    tap_code(KC_DEL);
+                    tap_code16(LCTL(KC_DEL));
                 } else {
-                    tap_code16(LALT(KC_DEL));  // Mac: Option+Delete word right
+                    tap_code16(LALT(KC_DEL));
                 }
                 return true;
 
             case MA_WRD_BSPC:
                 if (os_mode == OS_PC) {
                     // select previous word, then backspace
-                    tap_code16(LCTL(LSFT(KC_LEFT)));
-                    tap_code(KC_BSPC);
+                    tap_code16(LCTL(KC_BSPC));
                 } else {
-                    tap_code16(LALT(KC_BSPC)); // Mac: Option+Backspace word left
+                    tap_code16(LALT(KC_BSPC));
+                }
+                return true;
+
+            case MA_LINEL:
+                if (os_mode == OS_PC) {
+                    tap_code(KC_HOME);          // Windows/Linux: move to start of line
+                } else {
+                    tap_code16(LGUI(KC_LEFT));  // macOS: Cmd+Left → start of line
+                }
+                return true;
+
+            case MA_LINER:
+                if (os_mode == OS_PC) {
+                    tap_code(KC_END);           // Windows/Linux: move to end of line
+                } else {
+                    tap_code16(LGUI(KC_RIGHT)); // macOS: Cmd+Right → end of line
                 }
                 return true;
 
@@ -271,6 +289,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     tap_code(KC_BSPC);          // delete selection
                 } else {
                     tap_code16(LGUI(KC_BSPC));  // Mac: Cmd+Backspace backward
+                }
+                return true;
+            case MA_BLOCK_DOWM:
+                for (int i = 0; i < 5; i++) {
+                    tap_code(KC_DOWN);
+                }
+                return true;
+            case MA_BLOCK_UP:
+                for (int i = 0; i < 5; i++) {
+                    tap_code(KC_UP);
                 }
                 return true;
 
