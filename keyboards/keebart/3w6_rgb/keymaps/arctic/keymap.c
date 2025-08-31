@@ -42,7 +42,8 @@ enum custom_keycodes {
     MA_FIND,
     MA_OS_SEARCH,
     MA_LOCK,
-    MA_SAVE
+    MA_SAVE,
+    GUI_TAB
 };
 
 enum layers
@@ -110,10 +111,10 @@ combo_t key_combos[] = {
 
 enum os_modes os_mode = OS_PC;
 
-// Super alt tab and super alt ctl
+// alt tab, gui tab, ctl tab 
 bool is_alt_tab_active = false;
 bool is_ctl_tab_active = false;
-
+bool is_gui_tab_active = false;
 // LED Nummerierung: Links oben = 0, dann schlangenlinien nach rechts und hinunter, wechsel auf andere Hälfte im Thumb cluster
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     
@@ -139,9 +140,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),   
 
     [_NAV] = LAYOUT_split_3x5_3(
-        MA_LOCK, CTL_TAB,  MA_FIND, MA_QUIT     , OSM(KC_RALT),           KC_PGUP, MA_WRD_BSPC,  MA_WRDL,   MA_WRDR, MA_WRD_DEL,
-        KC_ESC,  ALT_TAB,  MA_SAVE, MA_OS_SEARCH, KC_TAB ,                KC_PGDN, KC_LEFT,      KC_DOWN,   KC_UP,   KC_RGHT,
-        MA_UNDO, MA_CUT,   MA_COPY, KC_PSCR     , MA_PASTE,               XXXXXXX, MA_LINE_BSPC, KC_HOME,   KC_END,  MA_LINE_DEL,
+        MA_LOCK, MA_QUIT,      MA_FIND, CTL_TAB, KC_PSCR,           KC_PGUP, MA_WRD_BSPC,  MA_WRDL,   MA_WRDR, MA_WRD_DEL,
+        KC_ESC,  MA_OS_SEARCH, MA_SAVE, ALT_TAB, KC_TAB ,                KC_PGDN, KC_LEFT,      KC_DOWN,   KC_UP,   KC_RGHT,
+        MA_UNDO, MA_CUT,       MA_COPY, GUI_TAB, MA_PASTE,               XXXXXXX, MA_LINE_BSPC, KC_HOME,   KC_END,  MA_LINE_DEL,
                                      _______, _______, _______,      KC_BSPC, LSFT_T(KC_ENT), KC_DEL
     ),
 
@@ -219,6 +220,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 tap_code(KC_TAB);
                 break;
 
+            case GUI_TAB:
+                if (!is_gui_tab_active) {
+                    is_gui_tab_active = true;
+                    register_code(KC_LGUI);
+                }
+                tap_code(KC_TAB);
+                break;
+
             case MA_WRDR:
                 os_mode == OS_PC ? tap_code16(LCTL(KC_RIGHT)) : tap_code16(LALT(KC_RIGHT));
                 return true;
@@ -228,19 +237,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 return true;
 
             case MA_WRD_DEL:
-                os_mode == OS_PC ? tap_code16(LCTL(KC_DEL)) : tap_code16(LALT(KC_DEL));
+                if (os_mode == OS_PC) {
+                    // select next word, then delete
+                    tap_code16(LCTL(LSFT(KC_RGHT)));
+                    tap_code(KC_DEL);
+                } else {
+                    tap_code16(LALT(KC_DEL));  // Mac: Option+Delete word right
+                }
                 return true;
 
             case MA_WRD_BSPC:
-                os_mode == OS_PC ? tap_code16(LCTL(KC_BSPC)) : tap_code16(LALT(KC_BSPC));
+                if (os_mode == OS_PC) {
+                    // select previous word, then backspace
+                    tap_code16(LCTL(LSFT(KC_LEFT)));
+                    tap_code(KC_BSPC);
+                } else {
+                    tap_code16(LALT(KC_BSPC)); // Mac: Option+Backspace word left
+                }
                 return true;
 
             case MA_LINE_DEL:
-                os_mode == OS_PC ? tap_code16(LSFT(KC_END)) : tap_code(KC_BSPC);
+                if (os_mode == OS_PC) {
+                    tap_code16(LSFT(KC_END));   // select to end of line
+                    tap_code(KC_DEL);           // delete selection
+                } else {
+                    tap_code16(LGUI(KC_DEL));   // Mac: Cmd+Delete forward
+                }
                 return true;
 
             case MA_LINE_BSPC:
-                os_mode == OS_PC ? tap_code16(LSFT(KC_HOME)) : tap_code(KC_DEL);
+                if (os_mode == OS_PC) {
+                    tap_code16(LSFT(KC_HOME));  // select to start of line
+                    tap_code(KC_BSPC);          // delete selection
+                } else {
+                    tap_code16(LGUI(KC_BSPC));  // Mac: Cmd+Backspace backward
+                }
                 return true;
 
             case MA_COPY:
@@ -335,6 +366,10 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         if (is_ctl_tab_active == true) {
             unregister_code(KC_LCTL);
             is_ctl_tab_active = false;
+        }
+        if (is_gui_tab_active == true) {
+            unregister_code(KC_LGUI);
+            is_gui_tab_active = false;
         }
     }
     return state;
