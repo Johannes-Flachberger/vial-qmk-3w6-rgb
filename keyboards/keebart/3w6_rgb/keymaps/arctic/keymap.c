@@ -15,10 +15,9 @@
  */
 
 #include QMK_KEYBOARD_H
-#include "keymap_german_mac_iso.h"
-#include "keycodes_german_pc.h"
+#include "custom_keycodes_german_mac_iso.h"
+#include "custom_keycodes_german_pc.h"
 
-// clang-format off
 enum os_modes {
     OS_MAC = 0,
     OS_PC
@@ -67,7 +66,7 @@ enum combos {
     COMBO_LGUI,
     COMBO_RGUI,
     COMBO_LALT,
-    COMBO_RALT_2,
+    COMBO_RALT,
     COMBO_LCTL_LGUI,
     COMBO_LCTL_LALT,
     COMBO_LCTL_LGUI_LALT,
@@ -98,19 +97,18 @@ const uint16_t PROGMEM combo_neo[] = {DE_N, DE_E, DE_O, COMBO_END};
 combo_t key_combos[] = {
     [COMBO_LCTL] = COMBO(combo_ts, KC_LCTL),
     [COMBO_RCTL] = COMBO(combo_ne, KC_RCTL),
-    [COMBO_LGUI] = COMBO(combo_tr, KC_LGUI),
-    [COMBO_RGUI] = COMBO(combo_ni, KC_RGUI),
-    [COMBO_LALT] = COMBO(combo_ta, KC_LALT),
-    [COMBO_RALT_2] = COMBO(combo_no, KC_LALT),
-    [COMBO_LCTL_LGUI] = COMBO(combo_tsr, LCTL(KC_LGUI)),
+    [COMBO_LGUI] = COMBO(combo_ta, KC_LGUI),
+    [COMBO_RGUI] = COMBO(combo_no, KC_RGUI),
+    [COMBO_LALT] = COMBO(combo_tr, KC_LALT),
+    [COMBO_RALT] = COMBO( combo_ni, KC_LALT),
+    [COMBO_LCTL_LGUI] = COMBO(combo_tsa, LCTL(KC_LGUI)),
     [COMBO_LCTL_LGUI_LALT] = COMBO(combo_tsra, LCTL(LGUI(KC_LALT))),
     [COMBO_LGUI_LALT] = COMBO(combo_tra, LGUI(KC_LALT)),
-    [COMBO_LCTL_LALT] = COMBO(combo_tsa, LCTL(KC_LALT)),
-    [COMBO_RCTL_RGUI] = COMBO(combo_nei, RCTL(KC_RGUI)),
+    [COMBO_LCTL_LALT] = COMBO(combo_tsr, LCTL(KC_LALT)),
+    [COMBO_RCTL_RGUI] = COMBO(combo_neo, RCTL(KC_RGUI)),
     [COMBO_RCTL_RGUI_LALT] = COMBO(combo_neio, RCTL(RGUI(KC_LALT))),
     [COMBO_RGUI_LALT] = COMBO(combo_nio, RGUI(KC_LALT)),
-    [COMBO_RCTL_LALT] = COMBO(combo_neo, RCTL(KC_LALT)),
-
+    [COMBO_RCTL_LALT] = COMBO(combo_nei, RCTL(KC_LALT)),
 };
 
 enum os_modes os_mode = OS_PC;
@@ -120,20 +118,21 @@ bool is_alt_tab_active = false;
 bool is_ctl_tab_active = false;
 bool is_gui_tab_active = false;
 // LED Nummerierung: Links oben = 0, dann schlangenlinien nach rechts und hinunter, wechsel auf andere Hälfte im Thumb cluster
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     
     [_ALPHA_COLEMAK] = LAYOUT_split_3x5_3(
         DE_Q, DE_W, DE_F,  DE_P, DE_B,                                          DE_J, DE_L, DE_U,    DE_Y,   DE_PLUS,
         DE_A, DE_R, DE_S,  DE_T, DE_G,                                          DE_M, DE_N, DE_E,    DE_I,   DE_O,
         DE_Z, DE_X, DE_C,  DE_D, DE_V,                                          DE_K, DE_H, DE_COMM, DE_DOT, DE_MINS,
-        LT(_NUM, KC_ENT) , LSFT_T(KC_SPC) , LT(_NAV,  KC_BSPC),     LT(_NUM, KC_TAB), LT( _SYM, KC_SPC) , LT(_FUN, KC_ENT)
+        LT(_NUM, KC_ENT) , LSFT_T(KC_BSPC) , LT(_NAV,  KC_SPC),     LT(_NUM, KC_TAB), LT( _SYM, KC_SPC) , LT(_FUN, KC_ENT)
     ),
 
     [_ALPHA_QWERTY] = LAYOUT_split_3x5_3(
         DE_Q, DE_W, DE_E, DE_R, DE_T,                                    DE_Y, DE_U, DE_I,    DE_O,   DE_P,  
         DE_A, DE_S, DE_D, DE_F, DE_G,                                    DE_H, DE_J, DE_K,    DE_L,   DE_SCLN,
         DE_Z, DE_X, DE_C, DE_V, DE_B,                                    DE_N, DE_M, DE_COMM, DE_DOT, DE_SLSH,
-        LT(_NUM, KC_ENT) , LSFT_T(KC_SPC) , LT(_NAV,  KC_BSPC),     LT(_NUM, KC_TAB), LT( _SYM, KC_SPC) , LT(_FUN, KC_ENT)
+        LT(_NUM, KC_ENT) , LSFT_T(KC_BSPC ) , LT(_NAV,  KC_SPC),     LT(_NUM, KC_TAB), LT( _SYM, KC_SPC) , LT(_FUN, KC_ENT)
     ),
     
     [_SYM] = LAYOUT_split_3x5_3(
@@ -144,9 +143,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),   
 
     [_NAV] = LAYOUT_split_3x5_3(
-        MA_LOCK, MA_QUIT,      MA_FIND , CTL_TAB , KC_PSCR  ,       XXXXXXX      , MA_LINEL      , MA_WRD_BSPC , MA_WRD_DEL , MA_LINER,
-        KC_ESC , MA_OS_SEARCH, MA_SAVE , ALT_TAB , KC_TAB   ,       MA_LINE_BSPC , KC_LEFT       , MA_WRDL     , MA_WRDR    , KC_RGHT,
-        MA_UNDO, MA_CUT,       MA_COPY , GUI_TAB , MA_PASTE ,       MA_LINE_DEL  , MA_BLOCK_DOWM , KC_DOWN     , KC_UP      , MA_BLOCK_UP,
+        MA_LOCK,         MA_QUIT,      MA_FIND , CTL_TAB , KC_PSCR  ,       XXXXXXX      , MA_LINEL      , MA_WRD_BSPC , MA_WRD_DEL , MA_LINER,
+        LSFT_T(KC_ESC) , MA_OS_SEARCH, MA_SAVE , ALT_TAB , KC_TAB   ,       MA_LINE_BSPC , KC_LEFT       , MA_WRDL     , MA_WRDR    , KC_RGHT,
+        MA_UNDO,         MA_CUT,       MA_COPY , GUI_TAB , MA_PASTE ,       MA_LINE_DEL  , MA_BLOCK_DOWM , KC_DOWN     , KC_UP      , MA_BLOCK_UP,
                                      _______, _______, _______,      KC_BSPC, LSFT_T(KC_ENT), KC_DEL
     ),
   
@@ -260,16 +259,20 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
             case MA_LINEL:
                 if (os_mode == OS_PC) {
+                    tap_code(KC_LEFT);          // moves to previous line if the cursor is at the beginning of a line
                     tap_code(KC_HOME);          // Windows/Linux: move to start of line
                 } else {
+                    tap_code(KC_LEFT);          // moves to previous line if the cursor is at the beginning of a line
                     tap_code16(LGUI(KC_LEFT));  // macOS: Cmd+Left → start of line
                 }
                 return true;
 
             case MA_LINER:
                 if (os_mode == OS_PC) {
+                    tap_code(KC_RIGHT);         // moves to next line if the cursor is at the end of a line
                     tap_code(KC_END);           // Windows/Linux: move to end of line
                 } else {
+                    tap_code(KC_RIGHT);         // moves to next line if the cursor is at the end of a line
                     tap_code16(LGUI(KC_RIGHT)); // macOS: Cmd+Right → end of line
                 }
                 return true;
