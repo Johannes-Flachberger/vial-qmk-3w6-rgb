@@ -62,7 +62,8 @@ enum combos {
   COMBO_RCTL_RGUI,
   COMBO_RCTL_LALT,
   COMBO_RCTL_RGUI_LALT,
-  COMBO_RGUI_LALT
+  COMBO_RGUI_LALT,
+  COMBO_TOGGLE_NUM
 };
 
 // define keys that make up combos
@@ -80,6 +81,7 @@ const uint16_t PROGMEM combo_nei[] = {DE_N, DE_E, DE_I, COMBO_END};
 const uint16_t PROGMEM combo_neio[] = {DE_N, DE_E, DE_I, DE_O, COMBO_END};
 const uint16_t PROGMEM combo_nio[] = {DE_N, DE_I, DE_O, COMBO_END};
 const uint16_t PROGMEM combo_neo[] = {DE_N, DE_E, DE_O, COMBO_END};
+const uint16_t PROGMEM combo_pf[] = {DE_P, DE_F, COMBO_END};
 
 // map combo names to their keys and the key they trigger
 combo_t key_combos[] = {
@@ -97,6 +99,7 @@ combo_t key_combos[] = {
     [COMBO_RCTL_RGUI_LALT] = COMBO(combo_neio, RCTL(RGUI(KC_LALT))),
     [COMBO_RGUI_LALT] = COMBO(combo_nio, RGUI(KC_LALT)),
     [COMBO_RCTL_LALT] = COMBO(combo_nei, RCTL(KC_LALT)),
+    [COMBO_TOGGLE_NUM] = COMBO(combo_pf, TG(_NUM))
 };
 
 enum os_modes os_mode = OS_PC;
@@ -200,7 +203,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       if (os_mode == OS_PC) {
         is_del_mode_active ? tap_code16(C(KC_BSPC)) : tap_code16(C(KC_LEFT));
       } else {
-        is_del_mode_active ? tap_code16(A(KC_BSPC)) : tap_code16(A(KC_LEFT));/
+        is_del_mode_active ? tap_code16(A(KC_BSPC)) : tap_code16(A(KC_LEFT));
       }
     }
     return false;
