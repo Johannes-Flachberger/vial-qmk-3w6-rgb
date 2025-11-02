@@ -45,7 +45,7 @@ enum custom_keycodes {
   GUI_TAB
 };
 
-enum layers { _ALPHA = 0, _ALPHA_QWERTY, _SYM, _NAV, _NUM, _FUN };
+enum layers { _ALPHA = 0, _ALPHA_QWERTY, _SYM, _NAV, _NUM, _LANG, _FUN };
 
 // define combo names
 enum combos {
@@ -118,13 +118,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         DE_Q, DE_W, DE_F,  DE_P, DE_B,                                          DE_J, DE_L, DE_U,    DE_Y,   DE_PLUS,
         DE_A, DE_R, DE_S,  DE_T, DE_G,                                          DE_M, DE_N, DE_E,    DE_I,   DE_O,
         DE_Z, DE_X, DE_C,  DE_D, DE_V,                                          DE_K, DE_H, DE_COMM, DE_DOT, DE_MINS,
-        LT(_NUM, KC_ENT) , LSFT_T(KC_BSPC) , LT(_NAV,  KC_SPC),     LT(_NUM, KC_TAB), LT( _SYM, KC_SPC) , LT(_FUN, KC_ENT)
+        LT(_LANG, KC_ENT) , LSFT_T(KC_BSPC) , LT(_NAV,  KC_SPC),     LT(_NUM, KC_TAB), LT( _SYM, KC_SPC) , LT(_FUN, KC_ENT)
     ),
     
     [_SYM] = LAYOUT_split_3x5_3(
-        RALT(DE_E), DE_PIPE , DE_DLR  , DE_LBRC , DE_RBRC ,                 DE_PERC , DE_QUES, DE_UDIA , DE_QUOT , DE_CIRC ,
-        DE_ADIA ,   DE_SLSH , DE_SS   , DE_LPRN , DE_RPRN ,                 DE_HASH , DE_EXLM, DE_PLUS , DE_DQUO , DE_ODIA , 
-        DE_LABK ,   DE_BSLS , DE_RABK , DE_LCBR , DE_RCBR ,                 DE_AT   , DE_AMPR, DE_ASTR ,  DE_EQL,  DE_TILD,
+        DE_DEG , RALT(DE_E) , DE_PIPE ,DE_LBRC , DE_RBRC ,                  DE_SECT, DE_QUES, DE_EQL , DE_QUOT , DE_CIRC ,
+        DE_PERC , DE_DLR     , DE_SLSH ,DE_LPRN , DE_RPRN ,                 DE_HASH , DE_EXLM, DE_PLUS , DE_DQUO , DE_TILD , 
+        DE_LABK , DE_RABK    , DE_BSLS ,DE_LCBR , DE_RCBR ,                 DE_AT   , DE_AMPR, DE_ASTR , DE_GRV ,DE_ACUT  ,
                                       _______, _______, _______,     _______, _______, _______     
     ),   
 
@@ -132,15 +132,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         MA_LOCK, MA_QUIT,      MA_FIND , CTL_TAB , KC_PSCR   ,       XXXXXXX , XXXXXXX       , MA_LINEL , MA_LINER , XXXXXXX ,
         KC_ESC , MA_OS_SEARCH, LT(0,MA_SAVE) , ALT_TAB , MA_PASTE_S,       XXXXXXX , MA_LEFT       , LT(0,MA_WRDL)  , MA_WRDR  , MA_RIGHT,
         MA_UNDO, MA_CUT,       MA_COPY , GUI_TAB , MA_PASTE  ,       XXXXXXX , MA_BLOCK_DOWN , KC_DOWN  , KC_UP    , MA_BLOCK_UP,
-                                     _______, _______, _______,      LT(0,KC_BSPC) , LSFT_T(KC_SPC), KC_DEL
+                                     _______, _______, _______,      LT(0,KC_TAB) , LSFT_T(KC_SPC), KC_ENT
     ),
   
     [_NUM] = LAYOUT_split_3x5_3(
-        DE_MINS , DE_7   , DE_8   , DE_9   , XXXXXXX ,                         XXXXXXX, KC_VOLD, KC_MUTE   ,  KC_VOLU , XXXXXXX,
-        DE_0    , DE_4   , DE_5   , DE_6   , DE_SLSH ,                         XXXXXXX, KC_MPRV, KC_MPLY   ,  KC_MNXT , XXXXXXX,
-        DE_DOT  , DE_1   , DE_2   , DE_3   , DE_COMM ,                         XXXXXXX, DE_ACUT, S(DE_ACUT),  DE_DEG  , XXXXXXX,
+        DE_MINS , DE_7   , DE_8   , DE_9   , XXXXXXX ,                         XXXXXXX, KC_VOLD, KC_MUTE ,  KC_VOLU , XXXXXXX,
+        DE_0    , DE_4   , DE_5   , DE_6   , DE_SLSH ,                         XXXXXXX, KC_MPRV, KC_MPLY ,  KC_MNXT , XXXXXXX,
+        DE_DOT  , DE_1   , DE_2   , DE_3   , DE_COMM ,                         XXXXXXX, XXXXXXX, XXXXXXX ,  XXXXXXX , XXXXXXX,
                                    _______, _______, _______,     _______, _______, _______
     ),
+
+    [_LANG] = LAYOUT_split_3x5_3(
+        XXXXXXX, XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX ,                 XXXXXXX , XXXXXXX, DE_UDIA , XXXXXXX , XXXXXXX ,
+        DE_ADIA ,   XXXXXXX , DE_SS   , XXXXXXX , XXXXXXX ,                 XXXXXXX , XXXXXXX, XXXXXXX , XXXXXXX , DE_ODIA , 
+        XXXXXXX ,   XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                 XXXXXXX   , XXXXXXX, XXXXXXX ,  XXXXXXX,  XXXXXXX,
+                                      _______, _______, _______,     _______, _______, _______     
+    ),   
 
     [_FUN] = LAYOUT_split_3x5_3(
         XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F10,                         XXXXXXX , XXXXXXX  , XXXXXXX,  XXXXXXX, XXXXXXX,
@@ -182,7 +189,7 @@ bool process_detected_host_os_kb(os_variant_t detected_os) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   // Intercept hold function
-  if (!record->tap.count && (keycode == LT(0, KC_BSPC))) {
+  if (!record->tap.count && (keycode == LT(0, KC_TAB))) {
     is_del_mode_active = record->event.pressed ? true : false;
     return false;
   }
