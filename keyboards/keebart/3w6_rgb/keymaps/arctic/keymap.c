@@ -146,7 +146,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         XXXXXXX, XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX ,                 XXXXXXX , XXXXXXX, DE_UDIA , XXXXXXX , XXXXXXX ,
         DE_ADIA ,   XXXXXXX , DE_SS   , XXXXXXX , XXXXXXX ,                 XXXXXXX , XXXXXXX, XXXXXXX , XXXXXXX , DE_ODIA , 
         XXXXXXX ,   XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                 XXXXXXX   , XXXXXXX, XXXXXXX ,  XXXXXXX,  XXXXXXX,
-                                      _______, _______, _______,     _______, _______, _______     
+                                      _______, _______, _______,     _______, LSFT_T(KC_SPC), _______     
     ),   
 
     [_FUN] = LAYOUT_split_3x5_3(
