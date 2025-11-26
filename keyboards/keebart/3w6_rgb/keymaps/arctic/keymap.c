@@ -67,40 +67,39 @@ enum combos {
 };
 
 // define keys that make up combos
-const uint16_t PROGMEM combo_ts[] = {DE_T, DE_S, COMBO_END};
-const uint16_t PROGMEM combo_tr[] = {DE_T, DE_R, COMBO_END};
-const uint16_t PROGMEM combo_ta[] = {DE_T, DE_A, COMBO_END};
-const uint16_t PROGMEM combo_ne[] = {DE_N, DE_E, COMBO_END};
-const uint16_t PROGMEM combo_ni[] = {DE_N, DE_I, COMBO_END};
-const uint16_t PROGMEM combo_no[] = {DE_N, DE_O, COMBO_END};
-const uint16_t PROGMEM combo_tsr[] = {DE_T, DE_S, DE_R, COMBO_END};
-const uint16_t PROGMEM combo_tsra[] = {DE_T, DE_S, DE_R, DE_A, COMBO_END};
-const uint16_t PROGMEM combo_tra[] = {DE_T, DE_R, DE_A, COMBO_END};
-const uint16_t PROGMEM combo_tsa[] = {DE_T, DE_S, DE_A, COMBO_END};
-const uint16_t PROGMEM combo_nei[] = {DE_N, DE_E, DE_I, COMBO_END};
-const uint16_t PROGMEM combo_neio[] = {DE_N, DE_E, DE_I, DE_O, COMBO_END};
-const uint16_t PROGMEM combo_nio[] = {DE_N, DE_I, DE_O, COMBO_END};
-const uint16_t PROGMEM combo_neo[] = {DE_N, DE_E, DE_O, COMBO_END};
-const uint16_t PROGMEM combo_pf[] = {DE_P, DE_F, COMBO_END};
+const uint16_t PROGMEM combo_lc[] = {DE_T, DE_S, COMBO_END};
+const uint16_t PROGMEM combo_la[] = {DE_F, DE_P, COMBO_END};
+const uint16_t PROGMEM combo_lg[] = {DE_C, DE_D, COMBO_END};
+const uint16_t PROGMEM combo_rc[] = {DE_N, DE_E, COMBO_END};
+const uint16_t PROGMEM combo_la2[] = {DE_L, DE_U, COMBO_END};
+const uint16_t PROGMEM combo_rg[] = {DE_H, KC_COMM, COMBO_END};
+const uint16_t PROGMEM combo_lca[] = {DE_S, DE_R, COMBO_END};
+const uint16_t PROGMEM combo_lcga[] = {DE_T, DE_S, DE_R, COMBO_END};
+const uint16_t PROGMEM combo_lga[] = {DE_C, DE_X, COMBO_END};
+const uint16_t PROGMEM combo_lcg[] = {DE_F, DE_W, COMBO_END};
+const uint16_t PROGMEM combo_rca[] = {DE_E, DE_I, COMBO_END};
+const uint16_t PROGMEM combo_rcga[] = {DE_N, DE_E, DE_I, COMBO_END};
+const uint16_t PROGMEM combo_rga[] = {DE_DOT, KC_COMM, COMBO_END};
+const uint16_t PROGMEM combo_rcg[] = {DE_U, DE_Y, COMBO_END};
+const uint16_t PROGMEM combo_num[] = {DE_P, DE_F, DE_W, COMBO_END};
 
 // map combo names to their keys and the key they trigger
 combo_t key_combos[] = {
-    [COMBO_LCTL] = COMBO(combo_ts, KC_LCTL),
-    [COMBO_RCTL] = COMBO(combo_ne, KC_RCTL),
-    [COMBO_LGUI] = COMBO(combo_ta, KC_LGUI),
-    [COMBO_RGUI] = COMBO(combo_no, KC_RGUI),
-    [COMBO_LALT] = COMBO(combo_tr, KC_LALT),
-    [COMBO_RALT] = COMBO(combo_ni, KC_LALT),
-    [COMBO_LCTL_LGUI] = COMBO(combo_tsa, LCTL(KC_LGUI)),
-    [COMBO_LCTL_LGUI_LALT] = COMBO(combo_tsra, LCTL(LGUI(KC_LALT))),
-    [COMBO_LGUI_LALT] = COMBO(combo_tra, LGUI(KC_LALT)),
-    [COMBO_LCTL_LALT] = COMBO(combo_tsr, LCTL(KC_LALT)),
-    [COMBO_RCTL_RGUI] = COMBO(combo_neo, RCTL(KC_RGUI)),
-    [COMBO_RCTL_RGUI_LALT] = COMBO(combo_neio, RCTL(RGUI(KC_LALT))),
-    [COMBO_RGUI_LALT] = COMBO(combo_nio, RGUI(KC_LALT)),
-    [COMBO_RCTL_LALT] = COMBO(combo_nei, RCTL(KC_LALT)),
-    [COMBO_TOGGLE_NUM] = COMBO(combo_pf, TG(_NUM))
-};
+    [COMBO_LCTL] = COMBO(combo_lc, KC_LCTL),
+    [COMBO_RCTL] = COMBO(combo_rc, KC_RCTL),
+    [COMBO_LGUI] = COMBO(combo_lg, KC_LGUI),
+    [COMBO_RGUI] = COMBO(combo_rg, KC_RGUI),
+    [COMBO_LALT] = COMBO(combo_la, KC_LALT),
+    [COMBO_RALT] = COMBO(combo_la2, KC_LALT),
+    [COMBO_LCTL_LGUI] = COMBO(combo_lcg, LCTL(KC_LGUI)),
+    [COMBO_LCTL_LGUI_LALT] = COMBO(combo_lcga, LCTL(LGUI(KC_LALT))),
+    [COMBO_LGUI_LALT] = COMBO(combo_lga, LGUI(KC_LALT)),
+    [COMBO_LCTL_LALT] = COMBO(combo_lca, LCTL(KC_LALT)),
+    [COMBO_RCTL_RGUI] = COMBO(combo_rcg, RCTL(KC_RGUI)),
+    [COMBO_RCTL_RGUI_LALT] = COMBO(combo_rcga, RCTL(RGUI(KC_LALT))),
+    [COMBO_RGUI_LALT] = COMBO(combo_rga, RGUI(KC_LALT)),
+    [COMBO_RCTL_LALT] = COMBO(combo_rca, RCTL(KC_LALT)),
+    [COMBO_TOGGLE_NUM] = COMBO(combo_num, TG(_NUM))};
 
 enum os_modes os_mode = OS_PC;
 
@@ -118,15 +117,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         DE_Q, DE_W, DE_F,  DE_P, DE_B,                                          DE_J, DE_L, DE_U,    DE_Y,   DE_PLUS,
         DE_A, DE_R, DE_S,  DE_T, DE_G,                                          DE_M, DE_N, DE_E,    DE_I,   DE_O,
         DE_Z, DE_X, DE_C,  DE_D, DE_V,                                          DE_K, DE_H, DE_COMM, DE_DOT, DE_MINS,
-        LT(_LANG, KC_ENT) , LSFT_T(KC_BSPC) , LT(_NAV,  KC_SPC),     LT(_NUM, KC_TAB), LT( _SYM, KC_SPC) , LT(_FUN, KC_ENT)
+        LT(_NUM, KC_ENT) , LSFT_T(KC_BSPC) , LT(_NAV,  KC_SPC),     LT(_NUM, KC_TAB), LT( _SYM, KC_SPC) , LT(_FUN, KC_ENT)
     ),
     
     [_SYM] = LAYOUT_split_3x5_3(
-        DE_DEG , RALT(DE_E) , DE_PIPE ,DE_LBRC , DE_RBRC ,                  DE_SECT, DE_QUES, DE_EQL , DE_QUOT , DE_CIRC ,
-        DE_PERC , DE_DLR     , DE_SLSH ,DE_LPRN , DE_RPRN ,                 DE_HASH , DE_EXLM, DE_PLUS , DE_DQUO , DE_TILD , 
-        DE_LABK , DE_RABK    , DE_BSLS ,DE_LCBR , DE_RCBR ,                 DE_AT   , DE_AMPR, DE_ASTR , DE_GRV ,DE_ACUT  ,
+        DE_DEG , RALT(DE_E) , DE_PIPE ,DE_LBRC , DE_RBRC ,                 DE_TILD , DE_QUES, DE_EQL  , DE_QUOT , DE_CIRC ,
+        DE_PERC , DE_DLR    , DE_SLSH ,DE_LPRN , DE_RPRN ,                 DE_HASH , DE_EXLM, DE_PLUS , DE_DQUO , DE_AT  , 
+        DE_LABK , DE_RABK   , DE_BSLS ,DE_LCBR , DE_RCBR ,                 DE_SECT , DE_AMPR, DE_ASTR , DE_GRV  , DE_ACUT ,
                                       _______, _______, _______,     _______, _______, _______     
-    ),   
+    ),
 
     [_NAV] = LAYOUT_split_3x5_3(
         MA_LOCK, MA_QUIT,      MA_FIND , CTL_TAB , KC_PSCR   ,       XXXXXXX , XXXXXXX       , MA_LINEL , MA_LINER , XXXXXXX ,
@@ -138,16 +137,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NUM] = LAYOUT_split_3x5_3(
         DE_MINS , DE_7   , DE_8   , DE_9   , XXXXXXX ,                         XXXXXXX, KC_VOLD, KC_MUTE ,  KC_VOLU , XXXXXXX,
         DE_0    , DE_4   , DE_5   , DE_6   , DE_SLSH ,                         XXXXXXX, KC_MPRV, KC_MPLY ,  KC_MNXT , XXXXXXX,
-        DE_DOT  , DE_1   , DE_2   , DE_3   , DE_COMM ,                         XXXXXXX, XXXXXXX, XXXXXXX ,  XXXXXXX , XXXXXXX,
+        DE_DOT  , DE_1   , DE_2   , DE_3   , DE_COMM ,                         XXXXXXX, DE_SS, DE_ADIA ,  DE_UDIA , DE_ODIA,
                                    _______, _______, _______,     _______, _______, _______
     ),
-
-    [_LANG] = LAYOUT_split_3x5_3(
-        XXXXXXX, XXXXXXX , XXXXXXX  , XXXXXXX , XXXXXXX ,                 XXXXXXX , XXXXXXX, DE_UDIA , XXXXXXX , XXXXXXX ,
-        DE_ADIA ,   XXXXXXX , DE_SS   , XXXXXXX , XXXXXXX ,                 XXXXXXX , XXXXXXX, XXXXXXX , XXXXXXX , DE_ODIA , 
-        XXXXXXX ,   XXXXXXX , XXXXXXX , XXXXXXX , XXXXXXX ,                 XXXXXXX   , XXXXXXX, XXXXXXX ,  XXXXXXX,  XXXXXXX,
-                                      _______, _______, _______,     _______, LSFT_T(KC_SPC), _______     
-    ),   
 
     [_FUN] = LAYOUT_split_3x5_3(
         XXXXXXX, KC_F7, KC_F8, KC_F9, KC_F10,                         XXXXXXX , XXXXXXX  , XXXXXXX,  XXXXXXX, XXXXXXX,
@@ -361,7 +353,16 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return true;
 
     case MA_OS_SEARCH:
-      os_mode == OS_PC ? tap_code16(KC_LGUI) : tap_code16(LGUI(KC_SPC));
+      if (os_mode == OS_PC) {
+        tap_code16(KC_LGUI);
+      } else {
+        register_code(KC_LGUI);
+        tap_code(KC_SPC);
+        SEND_STRING(SS_DELAY(30));
+        tap_code(DE_1);
+        unregister_code(KC_LGUI);
+      }
+
       return true;
 
     case MA_LOCK:
