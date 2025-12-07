@@ -33,6 +33,7 @@ enum custom_keycodes {
   MA_BLOCK_DOWN,
   MA_BLOCK_UP,
   MA_COPY,
+  MA_COPY_S,
   MA_CUT,
   MA_PASTE,
   MA_PASTE_S,
@@ -128,9 +129,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [_NAV] = LAYOUT_split_3x5_3(
-        MA_LOCK, MA_QUIT,      MA_FIND , CTL_TAB , KC_PSCR   ,       XXXXXXX , XXXXXXX       , MA_LINEL , MA_LINER , XXXXXXX ,
-        KC_ESC , MA_OS_SEARCH, LT(0,MA_SAVE) , ALT_TAB , MA_PASTE_S,       XXXXXXX , MA_LEFT       , LT(0,MA_WRDL)  , MA_WRDR  , MA_RIGHT,
-        MA_UNDO, MA_CUT,       MA_COPY , GUI_TAB , MA_PASTE  ,       XXXXXXX , MA_BLOCK_DOWN , KC_DOWN  , KC_UP    , MA_BLOCK_UP,
+        MA_LOCK, MA_SAVE,    MA_FIND       , CTL_TAB , KC_PSCR   ,       XXXXXXX , XXXXXXX       , MA_LINEL , MA_LINER , XXXXXXX ,
+        KC_ESC , MA_OS_SEARCH, LT(0, MA_COPY_S) , ALT_TAB , MA_PASTE_S,       MA_QUIT , MA_LEFT       , LT(0,MA_WRDL)  , MA_WRDR  , MA_RIGHT,
+        MA_UNDO, MA_CUT,       MA_COPY       , GUI_TAB , MA_PASTE  ,       XXXXXXX , MA_BLOCK_DOWN , KC_DOWN  , KC_UP    , MA_BLOCK_UP,
                                      _______, _______, _______,      LT(0,KC_TAB) , LSFT_T(KC_SPC), KC_ENT
     ),
   
@@ -186,11 +187,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return false;
   }
 
-  if (keycode == LT(0, MA_SAVE)) {
+  if (keycode == LT(0, MA_COPY_S)) {
     if (!record->tap.count) { // Intercept hold function to switch os mode
       os_mode = (os_mode == OS_MAC) ? OS_PC : OS_MAC;
-    } else if (record->event.pressed) { // MA_SAVE MACRO
-      os_mode == OS_PC ? tap_code16(LCTL(DE_S)) : tap_code16(LGUI(DE_S));
+    } else if (record->event.pressed) { // MA_COPY_S MACRO
+      os_mode == OS_PC ? tap_code16(C(S(DE_C))) : tap_code16(G(S(DE_C)));
     }
     return false;
   }
@@ -244,9 +245,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       tap_code(KC_TAB);
       break;
 
+    case MA_SAVE:
+      os_mode == OS_PC ? tap_code16(LCTL(DE_S)) : tap_code16(LGUI(DE_S));
+      return true;
+
     case MA_RIGHT:
       is_del_mode_active ? tap_code16(KC_DEL) : tap_code16(KC_RIGHT);
       return true;
+
     case MA_LEFT:
       is_del_mode_active ? tap_code16(KC_BSPC) : tap_code16(KC_LEFT);
       return true;
@@ -358,7 +364,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
         register_code(KC_LGUI);
         tap_code(KC_SPC);
-        SEND_STRING(SS_DELAY(30));
+        SEND_STRING(SS_DELAY(40));
         tap_code(DE_1);
         unregister_code(KC_LGUI);
       }
@@ -366,7 +372,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       return true;
 
     case MA_LOCK:
-      os_mode == OS_PC ? tap_code16(LGUI(DE_L)) : tap_code16(LGUI(KC_ESC));
+      os_mode == OS_PC ? tap_code16(LGUI(DE_L)) : tap_code16(C(G(DE_Q)));
       return true;
     }
     // ##### map german MAC keycodes to german PC ############
